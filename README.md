@@ -1,10 +1,12 @@
-# Окружение для разработки (Nginx, PHP, Mysql)
+# Окружение для разработки (Nginx, PHP, PostgreSQL)
 
-### Подключение к MySQL
+### Подключение к PostgreSQL
 
-* Хост БД: mysql5.7
+* Хост БД: postgres
+* Порт: 5432
 * Пользователь: root
 * Пароль: root
+* pgAdmin: http://localhost:5050/
 
 ### Работа с разными версиями PHP
 
