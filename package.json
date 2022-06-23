@@ -1,0 +1,21 @@
+{
+  "name": "docker_dev",
+  "version": "1.0.0",
+  "description": "Окружение для разработки (Nginx, PHP, PostgreSQL)",
+  "main": "app/www/index.php",
+  "scripts": {
+    "start": "docker-compose up",
+    "down": "docker-compose down",
+    "build": "docker-compose up --build -d"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dementiev-net/docker_dev.git"
+  },
+  "author": "Dmitry Dementiev <info@dementiev.net>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dementiev-net/docker_dev/issues"
+  },
+  "homepage": "https://github.com/dementiev-net/docker_dev#readme"
+}
