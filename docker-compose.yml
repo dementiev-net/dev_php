@@ -1,34 +1,6 @@
 services:
 
-  postgres:
-    container_name: postgres
-    image: postgres:14.4
-    environment:
-      POSTGRES_DB: "dev"
-      POSTGRES_USER: "root"
-      POSTGRES_PASSWORD: "root"
-      PGDATA: "/var/lib/postgresql/data/pgdata"
-    volumes:
-      - ./config/postgresql/conf.d:/docker-entrypoint-initdb.d
-      - ./app/db:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    networks:
-      - postgres
-
-  pgadmin:
-    container_name: pgadmin4
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "root@root.com"
-      PGADMIN_DEFAULT_PASSWORD: "root"
-    ports:
-      - "5050:80"
-    networks:
-      - postgres
-
-  nginx:
+  web:
     image: nginx:alpine
     container_name: nginx
     working_dir: /etc/nginx
@@ -39,27 +11,14 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    restart: always
     depends_on:
-      - php7.3
-      - php7.4
-      - php8.0
-
-#  php:
-#    build:
-#      context: ./config/php7.3
-#      dockerfile: Dockerfile
-#    container_name: php
-#    working_dir: /app
-#    volumes:
-#      - ./app:/app
-#      - ./config/php7.3/php-ini-overrides.ini:/usr/local/etc/php/conf.d/00-php.ini
-#      - ./bin/sendmail:/usr/local/bin/sendmail
-#    environment:
-#        PHP_IDE_CONFIG: serverName=localhost
+      - php
+      - db
 
   php:
     build:
-      context: ./config/php7.4
+      context: ./config/php
       dockerfile: Dockerfile
     container_name: php
     working_dir: /app
@@ -67,22 +26,32 @@ services:
       - ./app:/app
       - ./config/php7.4/php-ini-overrides.ini:/usr/local/etc/php/conf.d/00-php.ini
       - ./bin/sendmail:/usr/local/bin/sendmail
+    restart: always
     environment:
-        PHP_IDE_CONFIG: serverName=localhost
+      PHP_IDE_CONFIG: serverName=localhost
 
-#  php:
-#    build:
-#      context: ./config/php8.0
-#      dockerfile: Dockerfile
-#    container_name: php
-#    working_dir: /app
-#    volumes:
-#      - ./app:/app
-#      - ./config/php8.0/php-ini-overrides.ini:/usr/local/etc/php/conf.d/00-php.ini
-#      - ./bin/sendmail:/usr/local/bin/sendmail
-#    environment:
-#        PHP_IDE_CONFIG: serverName=localhost
+  db:
+    container_name: postgres
+    image: postgres:alpine
+    environment:
+      POSTGRES_DB: "dev"
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ./config/postgresql/conf.d:/docker-entrypoint-initdb.d
+      - ./app/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always
 
-networks:
-  postgres:
-    driver: bridge
+  pgadmin:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "root@root.com"
+      PGADMIN_DEFAULT_PASSWORD: "root"
+    ports:
+      - "5050:80"
+    restart: always
