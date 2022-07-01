@@ -21,6 +21,7 @@ services:
       context: ./config/php
       dockerfile: Dockerfile
     container_name: php
+    image: php:7.4
     working_dir: /app
     volumes:
       - ./app:/app
@@ -46,8 +47,8 @@ services:
     restart: always
 
   pgadmin:
-    container_name: pgadmin4
-    image: dpage/pgadmin4
+    container_name: pgadmin
+    image: pgadmin
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: "root@root.com"
