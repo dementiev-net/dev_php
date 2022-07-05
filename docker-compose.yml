@@ -1,7 +1,7 @@
 services:
 
   web:
-    image: nginx:alpine
+    image: dementievnet/nginx:latest
     container_name: nginx
     working_dir: /etc/nginx
     volumes:
@@ -20,8 +20,8 @@ services:
     build:
       context: ./config/php
       dockerfile: Dockerfile
+    image: dementievnet/php:latest
     container_name: php
-    image: php:7.4
     working_dir: /app
     volumes:
       - ./app:/app
@@ -33,7 +33,7 @@ services:
 
   db:
     container_name: postgres
-    image: postgres:alpine
+    image: dementievnet/postgres:latest
     environment:
       POSTGRES_DB: "dev"
       POSTGRES_USER: "root"
@@ -48,7 +48,7 @@ services:
 
   pgadmin:
     container_name: pgadmin
-    image: pgadmin
+    image: dementievnet/pgadmin:latest
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: "root@root.com"

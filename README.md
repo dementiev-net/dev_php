@@ -1,5 +1,29 @@
 # Окружение для разработки (Nginx, PHP, PostgreSQL)
 
+### Docker
+
+```console
+// загрузка из HUB
+docker images
+docker login
+
+docker pull dementievnet/phpmyadmin:latest
+docker pull dementievnet/mysql:latest
+docker pull dementievnet/nginx:latest
+docker pull dementievnet/php:latest
+
+// управление
+docker run
+docker-compose down
+
+// пересборка из 'Dockerfile'
+docker-compose up --build -d
+docker push phpdementievnet/php:latest
+
+// удаление неиспользованных контейнеров
+docker system prune
+```
+
 ### Подключение к PostgreSQL
 
 * Хост БД: postgres
